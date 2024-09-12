@@ -1,13 +1,5 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ProductController;
 
-const INPUT = [
-    ["name" => "Orange", "cost" => "5000", "amount" => "20"],
-    ["name" => "Banana", "cost" => "1000", "amount" => "10"],
-    ["name" => "Apple", "cost" => "500", "amount" => "0"],
-];
-
-Route::get('/products', function () {
-    return view('products', ['products' => INPUT]);
-});
+Route::get('/products', [ProductController::class, 'index']);
