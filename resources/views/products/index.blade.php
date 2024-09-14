@@ -31,20 +31,20 @@
         .product-card .out-of-stock {
             color: red;
         }
-        .amount-prod{
+
+        .amount-prod {
             color: red;
         }
     </style>
 </head>
 
 <body>
-
     <div class="product-display">
         @foreach ($products as $product)
             <div class="product-card">
-                <h2>{{ $product->name }}</h2>
-                <p>Цена: {{ $product->cost }}</p>
-                <p class="amount-prod">Кол-во: {{ $product->amount > 0 ? $product->amount : 'Нет в наличии' }}</p>
+                <h2><a href="{{ route('product.show', $product->id) }}">{{ $product->name }}</a></h2>
+                <p>Cost: {{ $product->cost }}</p>
+                <p>Amount: {{ $product->amount }}</p>
             </div>
         @endforeach
     </div>
