@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Товары</title>
-    <link rel="stylesheet" href="{{ asset('css/app.css') }}"> 
+    <link rel="stylesheet" href="{{ asset('css/app.css') }}">
 </head>
 
 <body>
@@ -19,3 +19,7 @@
 </body>
 
 </html>
+
+<!-- 
+Это директива Blade, которая позволяет вставлять динамическое содержимое в этот шаблон.
+@yield('content') используется для того, чтобы вложенные шаблоны могли подставлять свое содержимое в эту секцию. Например, если на странице товара нужно отобразить форму заказа, она будет подставляться в это место через секцию @section('content') во вложенном шаблоне. -->
