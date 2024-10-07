@@ -21,16 +21,6 @@ return new class extends Migration {
         }
     }
 
-    //if (!Schema::hasTable('products')) — перед созданием таблицы проверяется, существует ли уже таблица products. Если таблица не существует, выполняется её создание.
-
-    // Schema::create('products', function (Blueprint $table) { ... }) — создаёт таблицу products с полями:
-
-    // id() — первичный ключ.
-// name — название продукта.
-// cost — стоимость продукта.
-// amount — количество продукта.
-// timestamps() — два поля created_at и updated_at, которые автоматически заполняются временем создания и изменения записи.
-
     /**
      * Reverse the migrations.
      */

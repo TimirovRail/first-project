@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Models\Product;
 use App\Models\Order;
@@ -12,37 +12,36 @@ class OrderController extends Controller
     {
         $product = Product::findOrFail($productId);
 
-        
+        // Проверка на наличие товара
+        if ($product->amount == 0) {
+            return redirect()->route('product.show', $productId)
+                ->with('error', 'This product is out of stock and cannot be ordered.');
+        }
+
+        // Валидация заказа
         $request->validate([
             'quantity' => 'required|integer|min:1|max:' . $product->amount,
         ]);
 
-        
+        // Подсчет общей стоимости
         $totalCost = $product->cost * $request->quantity;
 
-        
+        // Создание заказа с указанием авторизованного пользователя
         Order::create([
             'product_id' => $productId,
+            'user_id' => Auth::id(),
             'quantity' => $request->quantity,
             'total_cost' => $totalCost,
         ]);
 
-        return redirect()->route('product.show', $productId)->with('success', 'Order placed successfully');
+        return redirect()->route('main.blade', $productId);
+    }
+    public function myOrders()
+    {
+        // Получаем заказы текущего пользователя
+        $orders = Order::where('user_id', Auth::id())->get();
+
+        // Возвращаем их на страницу с заказами
+        return view('orders.my', ['orders' => $orders]);
     }
 }
-
-// $product = Product::findOrFail($productId); — находит продукт по его ID. Если продукт не найден, Laravel автоматически бросит исключение ModelNotFoundException, которое покажет 404-ю ошибку.
-
-// $request->validate([...]); — выполняет валидацию данных формы. В данном случае проверяется количество (должно быть обязательным числом и находиться в пределах от 1 до максимального доступного количества).
-
-// $totalCost = $product->cost * $request->quantity; — вычисляет общую стоимость заказа, умножая цену продукта на количество.
-
-// Order::create([...]); — создаёт новую запись заказа в базе данных, используя массив с полями product_id, quantity и total_cost.
-
-// return redirect()->route('product.show', $productId)->with('success', 'Order placed successfully'); — перенаправляет пользователя обратно на страницу продукта с сообщением об успешном размещении заказа.
-
-
-
-// Product $product — благодаря "Route Model Binding", мы можем передавать модель продукта напрямую в метод контроллера. Это избавляет от необходимости вызывать Product::findOrFail($productId).
-
-// $validated = $request->validate([...]); — результат валидации сохраняется в переменную $validated, которую мы используем для доступа к полям формы.

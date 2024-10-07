@@ -1,27 +1,29 @@
 <?php
 
 use App\Http\Controllers\ProductController;
-use App\Http\Controllers\OrderController; 
+use App\Http\Controllers\OrderController;
+use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\Auth\RegisterController;
+use Illuminate\Support\Facades\Route;
 
+
+// Главная страница
+Route::get('/', function () {
+    return view('main');
+});
+Route::get('/my-orders', [OrderController::class, 'myOrders'])->name('orders.my')->middleware('auth');
+// Маршруты для продуктов
 Route::get('/product', [ProductController::class, 'index'])->name('product.index');
 Route::get('/product/{id}', [ProductController::class, 'show'])->name('product.show');
-Route::post('/product/{id}/order', [OrderController::class, 'store'])->name('order.store');
 
+// Заказ доступен только для авторизованных пользователей
+Route::post('/product/{id}/order', [OrderController::class, 'store'])->name('order.store')->middleware('auth');
 
-// Route::get('/product', [ProductController::class, 'index'])->name('product.index');:
+// Маршруты для авторизации
+Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
+Route::post('/login', [LoginController::class, 'login']);
+Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 
-// Этот маршрут реагирует на HTTP-запросы типа GET по URL /product.
-// Когда пользователь перейдет на /product, будет вызван метод index контроллера ProductController.
-// Имя маршрута — product.index. Это используется для удобного создания ссылок в приложении (например, в представлениях Blade можно использовать route('product.index')).
-// Route::get('/product/{id}', [ProductController::class, 'show'])->name('product.show');:
-
-// Этот маршрут также реагирует на HTTP-запросы GET, но на динамический URL /product/{id}.
-// {id} — это переменная часть URL, которая передает ID товара в метод show контроллера ProductController.
-// Например, если пользователь перейдет на /product/1, будет вызван метод show, и ему будет передан ID равный 1.
-// Имя маршрута — product.show, что делает его легкодоступным для ссылок.
-// Route::post('/product/{id}/order', [OrderController::class, 'store'])->name('order.store');:
-
-// Этот маршрут отвечает на POST-запросы на URL /product/{id}/order.
-// Он вызывает метод store контроллера OrderController.
-// Обычно такие маршруты используются для обработки данных форм, таких как форма заказа. Например, форма отправляет данные на этот маршрут для создания заказа.
-// Имя маршрута — order.store, используется для отправки формы.
+// Маршруты для регистрации
+Route::get('/register', [RegisterController::class, 'showRegistrationForm'])->name('register');
+Route::post('/register', [RegisterController::class, 'register']);

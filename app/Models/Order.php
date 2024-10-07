@@ -11,15 +11,12 @@ class Order extends Model
 
     protected $fillable = [
         'product_id',
+        'user_id',
         'quantity',
         'total_cost',
     ];
+    public function product()
+    {
+        return $this->belongsTo(Product::class);
+    }
 }
-
-// use HasFactory;:
-
-// Это трейт, который подключает фабрику для модели. Фабрики используются для быстрого создания тестовых данных в базе данных. Этот трейт автоматически добавляется при генерации модели с помощью команды Artisan.
-// protected $fillable = [...]:
-
-// Это свойство определяет массив полей, которые могут быть массово присвоены (mass assignment).
-// В массиве указаны поля product_id, quantity, и total_cost, что означает, что эти поля можно безопасно заполнять через массовое присвоение (например, используя Order::create($data)).
