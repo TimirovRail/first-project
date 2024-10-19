@@ -1,4 +1,5 @@
 @extends('layouts.app')
+@extends('layouts.main')
 
 @section('content')
 <div class="auth-container">
@@ -16,7 +17,6 @@
 
     <form method="POST" action="{{ route('login') }}" class="auth-form">
         @csrf
-
         <div class="form-group">
             <label for="email">Email:</label>
             <input type="email" id="email" name="email" required>

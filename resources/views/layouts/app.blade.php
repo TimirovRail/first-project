@@ -9,9 +9,6 @@
 </head>
 
 <body>
-    <header>
-        <h1>Заказ</h1>
-    </header>
 
     <div class="container">
         @yield('content') 

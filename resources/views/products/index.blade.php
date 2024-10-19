@@ -1,3 +1,4 @@
+@extends('layouts.main')
 <!DOCTYPE html>
 <html>
 

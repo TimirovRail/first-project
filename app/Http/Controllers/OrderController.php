@@ -34,7 +34,7 @@ class OrderController extends Controller
             'total_cost' => $totalCost,
         ]);
 
-        return redirect()->route('main.blade', $productId);
+        return redirect()->route('product.show', $productId);
     }
     public function myOrders()
     {
