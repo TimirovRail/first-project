@@ -12,7 +12,9 @@
                 <th>Товар</th>
                 <th>Количество</th>
                 <th>Стоимость</th>
+                <th>Статус</th>
                 <th>Дата заказа</th>
+                
             </tr>
         </thead>
         <tbody>
@@ -21,7 +23,9 @@
                     <td>{{ $order->product->name }}</td>
                     <td>{{ $order->quantity }}</td>
                     <td>{{ $order->total_cost }}</td>
+                    <td>{{ $order->status }}</td>
                     <td>{{ $order->created_at->format('d.m.Y H:i') }}</td>
+
                 </tr>
             @endforeach
         </tbody>

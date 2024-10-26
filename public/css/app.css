@@ -201,3 +201,52 @@
 .header button:hover {
     background-color: #777;
 }
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+table th,
+table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+
+table th {
+    background-color: #f2f2f2;
+    font-weight: bold;
+}
+
+table tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+table tr:hover {
+    background-color: #f1f1f1;
+}
+
+.button {
+    padding: 6px 12px;
+    margin: 5px;
+    cursor: pointer;
+    border: none;
+    color: white;
+    border-radius: 4px;
+}
+
+.button.approve {
+    background-color: #4CAF50;
+    /* Зеленый */
+}
+
+.button.deliver {
+    background-color: #2196F3;
+    /* Синий */
+}
+
+.button.disabled {
+    background-color: #cccccc;
+    /* Серый */
+    cursor: not-allowed;
+}

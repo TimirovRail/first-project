@@ -17,8 +17,5 @@
         <input type="number" id="quantity" name="quantity" min="1" max="{{ $product->amount }}" required>
         <button type="submit">Заказать</button>
     </form>
-    <p class="out-of-stock">Кол-во: {{ $product->amount }}</p>
-@else
-    <p>Кол-во в базе: {{ $product->amount }}</p>
-@endif
+@endif  
 @endsection

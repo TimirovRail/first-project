@@ -25,9 +25,9 @@ class AdminController extends Controller
     public function approveOrder($id)
     {
         $order = Order::find($id);
-
-
-        if ($order && $this->isStockAvailable($order)) {
+        if ($order -> product -> amount >= $order -> quantity) {
+            $order -> product -> amount -= $order -> quantity;
+            $order -> product -> save();
             $order->status = 'approved';
             $order->save();
             return back()->with('success', 'Заказ одобрен');
