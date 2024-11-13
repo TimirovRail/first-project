@@ -25,15 +25,10 @@ class AdminController extends Controller
     public function approveOrder($id)
     {
         $order = Order::find($id);
-        if (!$order) {
-            return back()->with('error', 'Заказ не найден');
-        }
         if ($order->status !== 'new') {
             return back()->with('error', 'Этот заказ не может быть одобрен');
         }
-        if (!Auth::user() || !Auth::user()->hasRole('admin')) {
-            return back()->with('error', 'У вас нет прав для изменения статуса заказа');
-        }
+
         if ($order->product->amount >= $order->quantity) {
             $order->product->amount -= $order->quantity;
             $order->product->save();
@@ -41,30 +36,20 @@ class AdminController extends Controller
             $order->save();
             return back()->with('success', 'Заказ одобрен');
         }
+
         return back()->with('error', 'Недостаточно товара на складе');
     }
 
     public function deliverOrder($id)
     {
         $order = Order::find($id);
-        if (!$order) {
-            return back()->with('error', 'Заказ не найден');
-        }
         if ($order->status !== 'approved') {
             return back()->with('error', 'Этот заказ не может быть доставлен');
         }
-        if (!Auth::user() || !Auth::user()->hasRole('admin')) {
-            return back()->with('error', 'У вас нет прав для изменения статуса заказа');
-        }
+
         $order->status = 'delivered';
         $order->save();
         return back()->with('success', 'Заказ доставлен');
-    }
-
-
-    private function isStockAvailable($order)
-    {
-        return true;
     }
 }
 
